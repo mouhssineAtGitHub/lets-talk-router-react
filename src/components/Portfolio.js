@@ -15,22 +15,18 @@ const Portfolio = props => {
 
 			<div>
 					<input className={props.fportfolioLinkClass} id="fportfolioLink" type="text" placeholder="Portfolio link*"
-						   onChange={props.handleFormChange}
+						   onChange={props.handleFormChange1}
 						   value={props.fportfolioLink}
 					/>
-
 					<textarea id="fsubject" name="fsubject" rows="3" cols="50"  className={props.fsubjectClass}
 							  placeholder="Anything else(another link, availablity, etc..)?"
-							  onChange={props.handleFormChange}
+							  onChange={props.handleFormChange1}
 							  value={props.fsubject}   
-					 >
-					
+					 >					
 					</textarea>
-					<button><a href="/SkillsAndLocation">BACK</a></button>
 					<input  id="mySubmit" type="submit" value="Submit"
 							onClick={props.handleSubmit} 
-					/>
-					 
+					/>					 
 			</div>
 		</div>
     );

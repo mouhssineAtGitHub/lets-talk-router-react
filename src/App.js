@@ -12,19 +12,22 @@ import Portfolio from './components/Portfolio';
 import './App.css';
 
 /* Create the Regex for inputs */
-const reg_fname = /^[a-zA-Z][ a-z|A-Z]{1,49}$/;
-const reg_fphone = /^[0][-][0-9]{3}[-][0-9]{3}[-][0-9]{3}$/;
-const reg_femail1 = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-const reg_femail2 = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-const reg_faddress1 = /^[a-zA-Z0-9][ a-z|A-Z|0-9-]{1,99}$/;
-const reg_faddress2 = /^[a-zA-Z0-9][ a-z|A-Z|0-9-]{1,99}$/;
-const reg_fcity = /^[a-zA-Z][ a-z|A-Z]{1,49}$/;
-const reg_fstate = /^[a-zA-Z][ a-z|A-Z]{1,49}$/;
-const reg_fcountryRegion = /^[a-zA-Z][ a-z|A-Z]{1,49}$/;
-const reg_fzipPostalCode = /^[0-9]{5}$/;
-const reg_fhearAboutUs = /^[a-zA-Z][ a-z|A-Z|0-9]{1,99}$/;
-const reg_fportfolioLink = /((([A-Za-z]{3,9}:(?:\/\/)?)(?:[\-;:&=\+\$,\w]+@)?[A-Za-z0-9\.\-]+|(?:www\.|[\-;:&=\+\$,\w]+@)[A-Za-z0-9\.\-]+)((?:\/[\+~%\/\.\w\-_]*)?\??(?:[\-\+=&;%@\.\w_]*)#?(?:[\.\!\/\\\w]*))?)/;
-const reg_fsubject = /^[ a-zA-Z|A-Z|0-9]{0,150}$/;
+const regex={
+  'fname':/^[a-zA-Z][ a-z|A-Z]{1,49}$/,
+  'fphone' : /^[0][-][0-9]{3}[-][0-9]{3}[-][0-9]{3}$/,
+  'femail1' : /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+  'femail2' : /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+  'faddress1' : /^[a-zA-Z0-9][ a-z|A-Z|0-9-]{1,99}$/,
+  'faddress2' : /^[a-zA-Z0-9][ a-z|A-Z|0-9-]{1,99}$/,
+  'fcity' : /^[a-zA-Z][ a-z|A-Z]{1,49}$/,
+  'fstate' : /^[a-zA-Z][ a-z|A-Z]{1,49}$/,
+  'fcountryRegion' : /^[a-zA-Z][ a-z|A-Z]{1,49}$/,
+  'fzipPostalCode' : /^[0-9]{5}$/,
+  'fhearAboutUs' : /^[a-zA-Z][ a-z|A-Z|0-9]{1,99}$/,
+  'fportfolioLink' : /((([A-Za-z]{3,9}:(?:\/\/)?)(?:[\-;:&=\+\$,\w]+@)?[A-Za-z0-9\.\-]+|(?:www\.|[\-;:&=\+\$,\w]+@)[A-Za-z0-9\.\-]+)((?:\/[\+~%\/\.\w\-_]*)?\??(?:[\-\+=&;%@\.\w_]*)#?(?:[\.\!\/\\\w]*))?)/,
+  'fsubject' : /^[ a-zA-Z|A-Z|0-9]{0,150}$/
+};
+
 
 /* Parent component starts here */
 class App extends Component {
@@ -52,132 +55,32 @@ class App extends Component {
     this.setState({radioBtnValue: e.target.value})
   }
 
-  handleCheck1 = e =>{
-    const myObj=this.state.checkObj1;
+  handleCheck = e =>{
+    const myObj= this.state[e.target.name];
     const myfield=e.target.id;
-    myObj[myfield]= this.state.checkObj1[myfield] === myfield? '':myfield;
-    this.setState({checkObj1:myObj});
+    myObj[myfield]= this.state[e.target.name][myfield] === myfield? '':myfield;
+    this.setState({[e.target.name]:myObj});
   }
 
-  handleCheck2 = e =>{
-    const myObj=this.state.checkObj2;
-    const myfield=e.target.id;
-    myObj[myfield]= this.state.checkObj2[myfield] === myfield? '':myfield;
-    this.setState({checkObj2:myObj});
+  handleFormChange1 = e =>{
+    let myRegex = null;
+    const value=e.target.value;
+    const item=e.target.id;
+    const itemClass=e.target.id + 'Class';
+    let itemClassValue='';
+    const regexName='reg_'+item;
+    if(['faddress1','faddress2','fhearAboutUs', 'fportfolioLink'].includes(item) ) itemClassValue='inputTxt_1'; 
+    if(['fname', 'femail1','femail2'].includes(item)) itemClassValue='inputTxt_2'; 
+    if(['fphone','fcity','fstate','fcountryRegion','fzipPostalCode'].includes(item)){itemClassValue='inputTxt_3';
+  }
+    if(!value || value==='' || value===' '){
+      this.setState({[item] :value, [itemClass]:'inputTxt_2'});
+    }else{
+      myRegex=[regexName];
+      this.setState({[item] : value, [itemClass]: regex[item].test(value)? itemClassValue + ' valid': itemClassValue+' invalid invalid2'});   
+    }       
   }
 
-  handleFormChange = e =>{
-      let myRegex = null;
-      const value=e.target.value;
-      switch (e.target.id){
-        case 'fname':
-          if(!value || value==='' || value===' '){
-            this.setState({fname :value, fnameClass:'inputTxt_2'});
-          }else{
-            myRegex=reg_fname;
-            this.setState({fname : value,fnameClass: myRegex.test(value)?'inputTxt_2 valid':'inputTxt_2 invalid invalid2'});   
-          }         
-        break;          
-        case 'fphone':
-          if(!value || value==='' || value===' '){
-            this.setState({fphone :value, fphoneClass:'inputTxt_3'});
-          }else{
-            myRegex=reg_fphone;
-            this.setState({fphone : value,fphoneClass: myRegex.test(value)?'inputTxt_3 valid':'inputTxt_3 invalid invalid2'});   
-          }                                 
-        break;
-        case 'femail1':
-          if(!value || value==='' || value===' '){
-            this.setState({femail1 :value, femail1Class:'inputTxt_2'});
-          }else{
-            myRegex=reg_femail1;
-            this.setState({femail1 : value,femail1Class: myRegex.test(value)?'inputTxt_2 valid':'inputTxt_2 invalid invalid2'});   
-          }                                 
-        break;
-        case 'femail2': 
-          if(!value || value==='' || value===' '){
-            this.setState({femail2 :value, femail2Class:'inputTxt_2'});
-          }else{
-            myRegex=reg_femail2;
-            this.setState({femail2 : value, femail2Class: myRegex.test(value)?'inputTxt_2 valid':'inputTxt_2 invalid invalid2'});   
-          }            
-        break;
-        case 'faddress1':
-          if(!value || value==='' || value===' '){
-            this.setState({faddress1 :value, faddress1Class:'inputTxt_1'});
-          }else{
-            myRegex=reg_faddress1;
-            this.setState({faddress1 : value, faddress1Class: myRegex.test(value)?'inputTxt_1 valid':'inputTxt_1 invalid invalid2'});   
-          }            
-        break;
-        case 'faddress2':
-          if(!value || value==='' || value===' '){
-            this.setState({faddress2 :value, faddress2Class:'inputTxt_1'});
-          }else{
-            myRegex=reg_faddress2;
-            this.setState({faddress2 : value, faddress2Class: myRegex.test(value)?'inputTxt_1 valid':'inputTxt_1 invalid invalid2'});   
-          }            
-        break;    
-        case 'fcity':
-          if(!value || value==='' || value===' '){
-            this.setState({fcity :value, fcityClass:'inputTxt_3'});
-          }else{
-            myRegex=reg_fcity;
-            this.setState({fcity : value, fcityClass: myRegex.test(value)?'inputTxt_3 valid':'inputTxt_3 invalid invalid2'});   
-          }            
-        break;
-        case 'fstate':
-          if(!value || value==='' || value===' '){
-            this.setState({fstate :value, fstateClass:'inputTxt_3'});
-          }else{
-            myRegex=reg_fstate;
-            this.setState({fstate : value, fstateClass: myRegex.test(value)?'inputTxt_3 valid':'inputTxt_3 invalid invalid2'});   
-          }            
-        break;
-        case 'fcountryRegion':
-          if(!value || value==='' || value===' '){
-            this.setState({fcountryRegion :value, fcountryRegionClass:'inputTxt_3'});
-          }else{
-            myRegex=reg_fcountryRegion;
-            this.setState({fcountryRegion : value, fcountryRegionClass: myRegex.test(value)?'inputTxt_3 valid':'inputTxt_3 invalid invalid2'});   
-          }            
-        break;
-        case 'fzipPostalCode':
-          if(!value || value==='' || value===' '){
-            this.setState({fzipPostalCode :value, fzipPostalCodeClass:'inputTxt_3'});
-          }else{
-            myRegex=reg_fzipPostalCode;
-            this.setState({fzipPostalCode : value, fzipPostalCodeClass: myRegex.test(value)?'inputTxt_3 valid':'inputTxt_3 invalid invalid2'});   
-          }            
-        break;    
-        case 'fhearAboutUs':
-          if(!value || value==='' || value===' '){
-            this.setState({fhearAboutUs :value, fhearAboutUsClass:'inputTxt_1'});
-          }else{
-            myRegex=reg_fhearAboutUs;
-            this.setState({fhearAboutUs : value, fhearAboutUsClass: myRegex.test(value)?'inputTxt_1 valid':'inputTxt_1 invalid invalid2'});   
-          }            
-        break;    
-        case 'fportfolioLink':
-          if(!value || value==='' || value===' '){
-            this.setState({fportfolioLink :value, fportfolioLinkClass:'inputTxt_1'});
-          }else{
-            myRegex=reg_fportfolioLink;
-            this.setState({fportfolioLink : value, fportfolioLinkClass: myRegex.test(value)?'inputTxt_1 valid':'inputTxt_1 invalid invalid2'});   
-          }            
-      break;    
-        case 'fsubject':
-        if(!value || value==='' || value===' '){
-          this.setState({fsubject :value, fsubjectClass:''});
-        }else{
-          myRegex=reg_fportfolioLink;
-          this.setState({fsubject : value, fsubjectClass: myRegex.test(value)?'valid':'invalid'});   
-        }            
-      break;
-      default:
-      break;    
-      }
-  }
 
 handleSubmit = e =>{
   {
@@ -249,6 +152,8 @@ handleSubmit = e =>{
 }
 
 render(){
+  // console.log(this.state.checkObj1);
+  console.log(this.state.checkObj2);
     return (
             <div className="main-container">           
               <FormHeader />
@@ -263,42 +168,50 @@ render(){
                   <Switch>
                       <Route exact path='/' /* component={PersonalInformation} */ render={()=>{
                         return(
-                          <PersonalInformation 
-                            handleFormChange={this.handleFormChange.bind(this)}
-                            fname={this.state.fname} fnameClass={this.state.fnameClass}
-                            fphone={this.state.fphone} fphoneClass={this.state.fphoneClass}
-                            femail1={this.state.femail1} femail1Class={this.state.femail1Class}
-                            femail2={this.state.femail2} femail2Class={this.state.femail2Class}
-                            faddress1={this.state.faddress1} faddress1Class={this.state.faddress1Class}
-                            faddress2={this.state.faddress2} faddress2Class={this.state.faddress2Class}
-                            fcity={this.state.fcity} fcityClass={this.state.fcityClass}
-                            fstate={this.state.fstate} fstateClass={this.state.fstateClass}
-                            fcountryRegion={this.state.fcountryRegion} fcountryRegionClass={this.state.fcountryRegionClass}
-                            fzipPostalCode={this.state.fzipPostalCode} fzipPostalCodeClass={this.state.fzipPostalCodeClass}
-                            fhearAboutUs={this.state.fhearAboutUs} fhearAboutUsClass={this.state.fhearAboutUsClass}
-                          />
+                          <div>
+                            <PersonalInformation 
+                              handleFormChange1={this.handleFormChange1.bind(this)}
+                              fname={this.state.fname} fnameClass={this.state.fnameClass}
+                              fphone={this.state.fphone} fphoneClass={this.state.fphoneClass}
+                              femail1={this.state.femail1} femail1Class={this.state.femail1Class}
+                              femail2={this.state.femail2} femail2Class={this.state.femail2Class}
+                              faddress1={this.state.faddress1} faddress1Class={this.state.faddress1Class}
+                              faddress2={this.state.faddress2} faddress2Class={this.state.faddress2Class}
+                              fcity={this.state.fcity} fcityClass={this.state.fcityClass}
+                              fstate={this.state.fstate} fstateClass={this.state.fstateClass}
+                              fcountryRegion={this.state.fcountryRegion} fcountryRegionClass={this.state.fcountryRegionClass}
+                              fzipPostalCode={this.state.fzipPostalCode} fzipPostalCodeClass={this.state.fzipPostalCodeClass}
+                              fhearAboutUs={this.state.fhearAboutUs} fhearAboutUsClass={this.state.fhearAboutUsClass}
+                            />
+                            <button><NavLink exact to="SkillsAndLocation">Next</NavLink></button>
+                          </div>
                          );}}/>
                       <Route exact path='/SkillsAndLocation' /* component={SkillsAndLocation} */ render={()=>{
                         return(
+                          <div>
                             <SkillsAndLocation 
-                              handleFormChange={this.handleFormChange.bind(this)}
-                              handleRadioBtns={this.handleRadioBtns.bind(this)}
-                              handleCheck1={this.handleCheck1.bind(this)}
-                              handleCheck2={this.handleCheck2.bind(this)}
+                              handleRadioBtns={this.handleRadioBtns}
+                              handleCheck={this.handleCheck}
                                                   
                               radioBtnValue={this.state.radioBtnValue}
                               checkObj1={this.state.checkObj1}
                               checkObj2={this.state.checkObj2}
                             />
+                            <button><NavLink exact to="">Back</NavLink></button>
+                            <button><NavLink exact to="Portfolio">Next</NavLink></button>
+                          </div>
                         );}}/>
                       <Route exact path='/Portfolio' /* component={Portfolio} */ render={()=>{
                         return(
+                          <div>
                           <Portfolio 
-                            handleFormChange={this.handleFormChange.bind(this)}
+                            handleFormChange1={this.handleFormChange1.bind(this)}
                             handleSubmit={this.handleSubmit.bind(this)}
                             fportfolioLink={this.state.fportfolioLink} fportfolioLinkClass={this.state.fportfolioLinkClass}
                             fsubject={this.state.fsubject} fsubjectClass={this.state.fsubjectClass}                                                 
-                          />                     
+                          />
+                          <button><NavLink exact to="SkillsAndLocation">Back</NavLink></button>
+                          </div>                     
                         );}}/> 
                   </Switch>
                   {/* </form>   */}
