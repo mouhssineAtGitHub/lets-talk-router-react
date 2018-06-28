@@ -90,44 +90,44 @@ handleSubmit = e =>{
             fzipPostalCode,fhearAboutUs,fportfolioLink, fsubject,checkObj1, checkObj2
           } = this.state;
     let errorMessage = [];
-    if (!fname || fname==='' || fname===' ' || !reg_fname.test(fname)){
+    if (!fname || fname==='' || fname===' ' || !regex.fname.test(fname)){
       errorMessage.push("Name: check the name input!");                
     }
 
-    if (!fphone || fphone==='' || fphone===' ' || !reg_fphone.test(fphone)){
+    if (!fphone || fphone==='' || fphone===' ' || !regex.fphone.test(fphone)){
       errorMessage.push("Phone: Check the Phone input!");       
     }
 
-    if (!femail1 || femail1==='' || femail1===' ' || !reg_femail1.test(femail1)){
+    if (!femail1 || femail1==='' || femail1===' ' || !regex.femail1.test(femail1)){
       errorMessage.push("Email-1: Check the Email-1 input!");       
     }
 
-    if (!femail2 || femail2==='' || femail2===' ' || !reg_femail2.test(femail2) || femail1!==femail2){
+    if (!femail2 || femail2==='' || femail2===' ' || !regex.femail2.test(femail2) || femail1!==femail2){
       errorMessage.push("Email-2: Check the Email-2 input!");        
     }
 
-    if (!faddress1 || faddress1==='' || faddress1===' ' || !reg_faddress1.test(faddress1)){
+    if (!faddress1 || faddress1==='' || faddress1===' ' || !regex.faddress1.test(faddress1)){
       errorMessage.push("Address-1: Check the Address-1 input!");       
     }
 
-    if (!faddress2 || faddress2==='' || faddress2===' ' || !reg_faddress2.test(faddress2)){
+    if (!faddress2 || faddress2==='' || faddress2===' ' || !regex.faddress2.test(faddress2)){
       errorMessage.push("faddress-2: Check the Address-2 input!");          
     }
 
-    if (!fcity || this.state.fcity==='' || fcity===' ' || !reg_fcity.test(fcity)){
+    if (!fcity || this.state.fcity==='' || fcity===' ' || !regex.fcity.test(fcity)){
       errorMessage.push("City: Check the City input!");       
     }
 
-    if (!fstate || fstate==='' || fstate===' ' || !reg_fstate.test(fstate)){
+    if (!fstate || fstate==='' || fstate===' ' || !regex.fstate.test(fstate)){
       errorMessage.push("State:: Check the State input!");       
     }
-    if (!fcountryRegion ||fcountryRegion==='' || fcountryRegion===' ' || !reg_fcountryRegion.test(fcountryRegion)){
+    if (!fcountryRegion ||fcountryRegion==='' || fcountryRegion===' ' || !regex.fcountryRegion.test(fcountryRegion)){
       errorMessage.push("Country-Region: Check the Country-Region input!");       
     }
-    if (!fzipPostalCode || fzipPostalCode==='' || fzipPostalCode===' ' || !reg_fzipPostalCode.test(fzipPostalCode)){
+    if (!fzipPostalCode || fzipPostalCode==='' || fzipPostalCode===' ' || !regex.fzipPostalCode.test(fzipPostalCode)){
       errorMessage.push("Zip-Postal-Code: Check the Zip-Postal-Code input!");       
     }
-    if (!fhearAboutUs || fhearAboutUs==='' || fhearAboutUs===' ' || !reg_fhearAboutUs.test(fhearAboutUs)){
+    if (!fhearAboutUs || fhearAboutUs==='' || fhearAboutUs===' ' || !regex.fhearAboutUs.test(fhearAboutUs)){
       errorMessage.push("Hear-Abou-Us: Check the Hear-Abou-Us input!");         
     }
     if(!checkObj1.check1 && !checkObj1.check2 && !checkObj1.check3 ) {
@@ -136,11 +136,11 @@ handleSubmit = e =>{
     if(!checkObj2.checkCity1 && !checkObj2.checkCity2 && !checkObj2.checkCity3 && !checkObj2.checkCity4 && !checkObj2.checkCity5 && !checkObj2.checkCity6) {
         errorMessage.push("ChckBoxes-2: check at least one!");
     }
-    if (!fportfolioLink || fportfolioLink==='' || fportfolioLink===' ' || !reg_fportfolioLink.test(fportfolioLink)){
+    if (!fportfolioLink || fportfolioLink==='' || fportfolioLink===' ' || !regex.fportfolioLink.test(fportfolioLink)){
       errorMessage.push("Portfolio-Link: Check the Portfolio-Link input!");  
     }   
 
-    if (!fsubject || fsubject==='' || fsubject===' ' || !reg_fsubject.test(fsubject)){
+    if (!fsubject || fsubject==='' || fsubject===' ' || !regex.fsubject.test(fsubject)){
       errorMessage.push("Subject: Check the Subject input!");
     }
     
