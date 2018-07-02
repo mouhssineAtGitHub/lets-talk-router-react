@@ -15,12 +15,12 @@ const Portfolio = props => {
 
 			<div>
 					<input className={props.fportfolioLinkClass} id="fportfolioLink" type="text" placeholder="Portfolio link*"
-						   onChange={props.handleFormChange1}
+						   onChange={props.handleFormChange}
 						   value={props.fportfolioLink}
 					/>
 					<textarea id="fsubject" name="fsubject" rows="3" cols="50"  className={props.fsubjectClass}
 							  placeholder="Anything else(another link, availablity, etc..)?"
-							  onChange={props.handleFormChange1}
+							  onChange={props.handleFormChange}
 							  value={props.fsubject}   
 					 >					
 					</textarea>

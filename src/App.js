@@ -44,7 +44,7 @@ class App extends Component {
       fcountryRegion:'', fcountryRegionClass:'inputTxt_3', 
       fzipPostalCode:'', fzipPostalCodeClass:'inputTxt_3',
       fhearAboutUs:'', fhearAboutUsClass:'inputTxt_1',
-      fportfolioLink:'', fportfolioLinkClass:'inputTxt_3',
+      fportfolioLink:'', fportfolioLinkClass:'inputTxt_1',
       fsubject:'', fsubjectClass:'inputTxt_1',
       radioBtnValue: 'r1',
       checkObj1: {check1:'check1', check2:'', check3:''},
@@ -62,19 +62,19 @@ class App extends Component {
     this.setState({[e.target.name]:myObj});
   }
 
-  handleFormChange1 = e =>{
+  handleFormChange = e =>{
     let myRegex = null;
     const value=e.target.value;
     const item=e.target.id;
     const itemClass=e.target.id + 'Class';
     let itemClassValue='';
     const regexName='reg_'+item;
-    if(['faddress1','faddress2','fhearAboutUs', 'fportfolioLink'].includes(item) ) itemClassValue='inputTxt_1'; 
-    if(['fname', 'femail1','femail2'].includes(item)) itemClassValue='inputTxt_2'; 
-    if(['fphone','fcity','fstate','fcountryRegion','fzipPostalCode'].includes(item)){itemClassValue='inputTxt_3';
-  }
+    if(['faddress1','faddress2','fhearAboutUs', 'fportfolioLink'].includes(item) ) {itemClassValue='inputTxt_1';} 
+    if(['fname', 'femail1','femail2'].includes(item) ){ itemClassValue='inputTxt_2';} 
+    if(['fphone','fcity','fstate','fcountryRegion','fzipPostalCode'].includes(item) ) {itemClassValue='inputTxt_3';}
+  
     if(!value || value==='' || value===' '){
-      this.setState({[item] :value, [itemClass]:'inputTxt_2'});
+      this.setState({[item] :value, [itemClass]: itemClassValue });
     }else{
       myRegex=[regexName];
       this.setState({[item] : value, [itemClass]: regex[item].test(value)? itemClassValue + ' valid': itemClassValue+' invalid invalid2'});   
@@ -89,6 +89,7 @@ handleSubmit = e =>{
             fname,fphone,femail1,femail2,faddress1,faddress2, fcity,fstate,fcountryRegion, 
             fzipPostalCode,fhearAboutUs,fportfolioLink, fsubject,checkObj1, checkObj2
           } = this.state;
+
     let errorMessage = [];
     if (!fname || fname==='' || fname===' ' || !regex.fname.test(fname)){
       errorMessage.push("Name: check the name input!");                
@@ -170,7 +171,7 @@ render(){
                         return(
                           <div>
                             <PersonalInformation 
-                              handleFormChange1={this.handleFormChange1.bind(this)}
+                              handleFormChange={this.handleFormChange}
                               fname={this.state.fname} fnameClass={this.state.fnameClass}
                               fphone={this.state.fphone} fphoneClass={this.state.fphoneClass}
                               femail1={this.state.femail1} femail1Class={this.state.femail1Class}
@@ -205,8 +206,9 @@ render(){
                         return(
                           <div>
                           <Portfolio 
-                            handleFormChange1={this.handleFormChange1.bind(this)}
-                            handleSubmit={this.handleSubmit.bind(this)}
+                            handleFormChange={this.handleFormChange}
+                            handleSubmit={this.handleSubmit}
+
                             fportfolioLink={this.state.fportfolioLink} fportfolioLinkClass={this.state.fportfolioLinkClass}
                             fsubject={this.state.fsubject} fsubjectClass={this.state.fsubjectClass}                                                 
                           />
